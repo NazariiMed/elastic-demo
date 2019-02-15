@@ -1,0 +1,96 @@
+POST twitter/_doc/1
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+
+GET twitter/_doc/1
+
+POST twitter/_doc/
+{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}
+
+POST twitter/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+PUT testanalyzer
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+    		"default" : {
+    			"type" : "keyword"
+    		},
+        "ngram_analyzer": {
+          "tokenizer": "ngram_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "ngram_tokenizer": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 3,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "default": {
+          "type": "text"
+        },
+        "standart": {
+          "type":     "text",
+          "analyzer": "standard"
+        },
+        "keyword": {
+          "type": "text",
+          "analyzer": "keyword"
+        },
+        "ngram": {
+          "type": "text",
+          "analyzer": "ngram_analyzer"
+        }
+      }
+    }
+  }
+}
+
+POST /testanalyzer/_doc
+{
+  "default":"kubernetes is awesome",
+  "standart":"kubernetes is awesome",
+  "keyword":"kubernetes is awesome",
+  "ngram":"kubernetes is awesome"
+}
+
+POST /testanalyzer/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+POST /testanalyzer/_search
+{
+  "query": {
+    "term": {
+      "default": "kubernetes"
+    }
+  }
+}
+
+GET /testanalyzer/_doc/a2ug8GgB0r6MxBEjoqr-/_termvectors/?fields=default

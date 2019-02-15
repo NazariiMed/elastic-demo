@@ -1,0 +1,8 @@
+**/application-local.yml
+*.log
+target/
+!.mvn/wrapper/maven-wrapper.jar
+### IntelliJ IDEA ###
+.idea
+*.iml
+.DS_Store

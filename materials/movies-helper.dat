@@ -1,0 +1,55 @@
+PUT /movies
+{
+ "mappings": {
+  "_doc": {
+   "properties": {
+    "Title": {"type": "text"},
+    "US_Gross": {"type": "integer"},
+    "Worldwide_Gross": {"type": "integer"},
+    "US_DVD_Sales": {"type": "integer"},
+    "Production_Budget": {"type": "integer"},
+    "Release_Date": {"type": "text"},
+    "MPAA_Rating": {"type": "keyword"},
+    "Running_Time_min": {"type": "integer"},
+    "Distributor": {"type": "text"},
+    "Source": {"type": "text"},
+    "Major_Genre": {"type": "text"},
+    "Creative_Type": {"type": "text"},
+    "Director": {"type": "text"},
+    "Rotten_Tomatoes_Rating": {"type": "integer"},
+    "IMDB_Rating": {"type": "double"},
+    "IMDB_Votes": {"type": "integer"}
+   }
+  }
+ }
+}
+
+POST /movies/_doc
+{
+  "Title":"The Land Girls",
+  "US_Gross":146083,
+  "Worldwide_Gross":146083,
+  "US_DVD_Sales":null,
+  "Production_Budget":8000000,
+  "Release_Date":"12-Jun-98",
+  "MPAA_Rating":"R",
+  "Running_Time_min":null,
+  "Distributor":"Gramercy",
+  "Source":null,
+  "Major_Genre":null,
+  "Creative_Type":null,
+  "Director":null,
+  "Rotten_Tomatoes_Rating":null,
+  "IMDB_Rating":6.1,
+  "IMDB_Votes":1071
+}
+
+
+POST /movies/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET /movies/_doc/bmt58GgB0r6MxBEjjZ6Y/_termvectors/?fields=Distributor
